@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS.Labs8.Task2
+namespace CS.Labs8.Task3
 {
     class CreateAccount
     {
@@ -20,14 +20,12 @@ namespace CS.Labs8.Task2
 
             Write(acc1);
         }
-
         static void Write(BankAccount acc)
         {
             Console.WriteLine("Account number is {0}", acc.Number());
             Console.WriteLine("Account balance is {0}", acc.Balance());
             Console.WriteLine("Account type is {0}", acc.Type());
-            
-            Console.WriteLine("Ttransctions:");
+            Console.WriteLine("Transactions:");
             foreach (BankTransaction tran in acc.Transactions())
             {
                 Console.WriteLine("Date/Time: {0}\tAmount: {1}", tran.When(), tran.Amount());

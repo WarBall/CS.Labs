@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CS.Labs8.Task2
+namespace CS.Labs8.Task3
 {
-    class BankAccount
+    sealed class BankAccount : IDisposable
     {
         private long accNo;
         private decimal accBal;
         private AccountType accType;
+        private Queue tranQueue = new Queue();
 
         private static long nextNumber = 123;
-        private Queue tranQueue = new Queue();
+        bool disposed = false;
 
         public BankAccount()
         {
@@ -41,6 +43,33 @@ namespace CS.Labs8.Task2
             accNo = NextNumber();
             accType = aType;
             accBal = aBal;
+        }
+
+        public void Dispose()
+        {
+            if (!disposed)
+            {
+                StreamWriter swFile = File.AppendText("Transactions.Dat");
+
+                swFile.WriteLine("Account number is {0}", accNo);
+                swFile.WriteLine("Account balance is {0}", accBal);
+                swFile.WriteLine("Account type is {0}", accType);
+
+                swFile.WriteLine("Transactions:");
+                foreach (BankTransaction tran in tranQueue)
+                {
+                    swFile.WriteLine("Date/Time: {0}\tAmount: {1}", tran.When(), tran.Amount());
+                }
+                swFile.Close();
+
+                disposed = true;
+                GC.SuppressFinalize(this);
+            }
+        }
+
+        ~BankAccount()
+        {
+            Dispose();
         }
 
         public bool Withdraw(decimal amount)
