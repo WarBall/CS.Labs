@@ -18,5 +18,10 @@ namespace CS.Labs9.Task1
         public void Visit(IWhiteSpaceToken t) { }
 
         public void Visit(IOtherToken t) { }
+
+        public void Test()
+        {
+            new NullTokenVisitor();
+        }
     }
 }
