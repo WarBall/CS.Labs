@@ -3,43 +3,78 @@ namespace CS.Labs9.Task1
 { 
     using System;
     
-    public class HTMLTokenVisitor : NullTokenVisitor
+    public sealed class HTMLTokenVisitor : ITokenVisitor
     {
-        public override void Visit(ILineStartToken line)
+        public void Visit(ILineStartToken line)
         {
             Console.Write("<span class=\"line_number\">");
             Console.Write("{0,3}", line.Number());
             Console.Write("</span>");
         }
 
-        public override void Visit(ILineEndToken t)
+        public void Visit(ILineEndToken t)
         {
             Console.WriteLine();
         }
 
-        public override void Visit(IIdentifierToken token)
+        public void Visit(IIdentifierToken token)
+        {
+            SpannedFilteredWrite("identifier", token);
+        }
+
+        public void Visit(ICommentToken token)
+        {
+            SpannedFilteredWrite("comment", token);
+        }
+
+        public void Visit(IDirectiveToken token)
+        {
+            SpannedFilteredWrite("directive", token);
+        }
+
+        public void Visit(IKeywordToken token)
+        {
+            SpannedFilteredWrite("keyword", token);
+        }
+
+        public void Visit(IWhiteSpaceToken token)
         {
             Console.Write(token.ToString());
         }
 
-        public override void Visit(ICommentToken token)
+        public void Visit(IOtherToken token)
         {
-            Console.Write(token.ToString());
+            FilteredWrite(token); ;
         }
 
-        public override void Visit(IKeywordToken token)
+        private void FilteredWrite(IToken token)
         {
-            Console.Write(token.ToString());
+            string src = token.ToString();
+
+            for (int i = 0; i < src.Length; i++)
+            {
+                string dst;
+
+                switch (src[i])
+                {
+                    case '<':
+                        dst = "&lt;"; break;
+                    case '>':
+                        dst = "&gt;"; break;
+                    case '&':
+                        dst = "&amp;"; break;
+                    default:
+                        dst = new string(src[i], 1); break;
+                }
+                Console.Write(dst);
+            }
         }
 
-        public override void Visit(IWhiteSpaceToken token)
+        private void SpannedFilteredWrite(string spanName, IToken token)
         {
-            Console.Write(token.ToString());
-        }
-
-        public override void Visit(IOtherToken token)
-        {
-            Console.Write(token.ToString());
+            Console.Write("<span class=\"{0}\">", spanName);
+            FilteredWrite(token);
+            Console.Write("</span>");
         }
     }
 }
