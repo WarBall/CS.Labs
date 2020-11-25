@@ -1,8 +1,8 @@
 
-namespace CS.Labs9.Task1
+namespace CSharp
 { 
     using System;
-    
+
     public sealed class HTMLTokenVisitor : ITokenVisitor
     {
         public void Visit(ILineStartToken line)

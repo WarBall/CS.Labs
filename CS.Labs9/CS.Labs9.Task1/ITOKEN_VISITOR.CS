@@ -1,5 +1,5 @@
 
-namespace CS.Labs9.Task1
+namespace CSharp
 {
     /// <remarks>
     /// The specific kinds of derived token interfaces are

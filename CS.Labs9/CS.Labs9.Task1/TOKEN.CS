@@ -1,5 +1,5 @@
 
-namespace CS.Labs9.Task1
+namespace CSharp
 {
     /// <summary>
     /// Token provides a common abstract base class for 

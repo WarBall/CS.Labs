@@ -1,5 +1,5 @@
 
-namespace CS.Labs9.Task1
+namespace CSharp
 {
     using Ctype = System.Char;
     

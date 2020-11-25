@@ -1,9 +1,9 @@
 
-namespace CS.Labs9.Task1
+namespace CSharp
 {
-    public abstract class NullTokenVisitor : ITokenVisitor
+    public class NullTokenVisitor : ITokenVisitor
     {
-        public virtual void Visit (ILineStartToken t) { }
+        public virtual void Visit(ILineStartToken t) { }
 
         public virtual void Visit(ILineEndToken t) { }
 
